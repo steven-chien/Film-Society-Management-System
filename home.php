@@ -23,6 +23,7 @@
                     <ul>
                         <li><a href="new_tickets.php" >New Tickets</a></li>
                         <li><a href="past_tickets.php" >Past Tickets</a></li>
+                        <li><a href="application_import.php">Import application data</a></li>
                     </ul>
                 </div>
             </li>
