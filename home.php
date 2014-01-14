@@ -27,6 +27,16 @@
                     </ul>
                 </div>
             </li>
+            <li>
+                <a href="#" id="Screenings">Screenings</a>
+                <div id="screening_menu">
+                    <ul>
+                        <li><a href="new_screening.php">New Screening</a></li>
+                        <li><a href="screening.php">Screening Record</a></li>
+                        <li><a href="screening_attendance.php">Input Attendance</a></li>
+                    </ul>
+                </div>
+            </li>
             <li>Manage Library</li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
@@ -46,6 +56,21 @@
                         console.log('link clicked');
                         $('#ticket_menu').hide();
                         ticket_click = 0;
+                    }
+                });
+                
+                var screening_click = 0;
+                $('#screening_menu').hide();
+                $('#Screenings').click(function() {
+                    if(screening_click==0) {
+                        console.log('link clicked');
+                        $('#screening_menu').show();
+                        screening_click = 1;
+                    }
+                    else {
+                        console.log('link clicked');
+                        $('#screening_menu').hide();
+                        screening_click = 0;
                     }
                 });
             });
