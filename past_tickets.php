@@ -39,7 +39,9 @@ and open the template in the editor.
 	}
         $result->free();
 	echo '</table>';
-        echo '<p><a href="home.php">Go Back</a></p>';
+        echo '<table>';
+        echo '<tr><td><a href="home.php">Go Back</a></td><td><a href="ticket_application_record_edit.php">Edit</a></td></tr>';
+        echo '</table>';
         ?>
     </body>
 </html>

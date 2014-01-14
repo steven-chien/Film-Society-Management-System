@@ -14,8 +14,8 @@ and open the template in the editor.
         <?php
         // put your code here
         if(isset($_GET['TicketID'])) {
-            $query = sprintf("select TA.StudentID, M.Name, M.Surname, if(TA.Response=1, 'Yes', 'No') as Response, if(TA.Confirmation=1, 'Yes', 'No') as Confirmation from tickets_application as TA left outer join member as M on M.StudentID=TA.StudentID where TA.TicketID=%d ", filter_input(INPUT_GET, 'TicketID'));
-            
+            $query = sprintf("select TA.StudentID, M.Name, M.Surname, if(TA.Response=1, 'Yes', 'No') as Response, if(TA.Confirmation=1, 'Yes', 'No') as Confirmation, sum(TA.Response) as previous_response, sum(TA.Confirmation) as previous_confirmation from tickets_application as TA left outer join member as M on M.StudentID=TA.StudentID where TA.TicketID=%d group by TA.StudentID", filter_input(INPUT_GET, 'TicketID'));
+            #echo $query;
             if(isset($_GET['Response'])&&filter_input(INPUT_GET, 'Response')=='Yes') {
                 $query = $query . ' and Response=1';
             }
@@ -29,7 +29,7 @@ and open the template in the editor.
                 $query = $query . ' and Confirmation=0';
             }
             $query = $query . ' order by Response desc, Confirmation desc;';
-#echo $query;
+
             $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
             if(!$mysql) {
                 die(mysqli_connect_error());
@@ -40,10 +40,10 @@ and open the template in the editor.
                 die(mysqli_errno());
             }
             
-            echo '<table>';
-            echo '<tr><td>StudentID</td><td>Name</td><td>Surname</td><td>Response</td><td>Confirmation</td></tr>';
+            echo '<table cellpadding="10">';
+            echo '<tr><td>StudentID</td><td>Name</td><td>Surname</td><td>Response</td><td>Confirmation</td><td>Past Response</td><td>Past Confirmation</td></tr>';
             while($row = $result->fetch_assoc()) {
-                echo '<tr><td>' . $row['StudentID'] . '</td><td>' . $row['Name'] . '</td><td>' . $row['Surname'] . '</td><td>' . $row['Response'] . '</td><td>' . $row['Confirmation'] . '</td></tr>';
+                echo '<tr><td>' . $row['StudentID'] . '</td><td>' . $row['Name'] . '</td><td>' . $row['Surname'] . '</td><td>' . $row['Response'] . '</td><td>' . $row['Confirmation'] . '</td><td align="right">' . $row['previous_response'] . '</td><td align="right">' . $row['previous_confirmation'] . '</td></tr>';
             }
             echo '</table>';
         }
@@ -58,7 +58,10 @@ and open the template in the editor.
         echo '<tr><td colspan=2 align="right"><input type="submit" name="submit" value=submit></td></tr>';
         echo '</table>';
         echo '</form>';
+        
+        echo '<table>';
+        echo '<tr><td><a href="home.php">Go Back</a></td><td><a href="ticket_application_record_edit.php?TicketID='.filter_input(INPUT_GET, 'TicketID').'">Edit</a></td></tr>';
+        echo '</table>';
         ?>
-        <p><a href="home.php">Go Back</a></p>
     </body>
 </html>

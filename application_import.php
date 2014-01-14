@@ -14,7 +14,7 @@ and open the template in the editor.
         <?php
         // put your code here
         $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
-        if(!$msysql) {
+        if(!$mysql) {
             echo mysqli_connect_error();
         }
         
