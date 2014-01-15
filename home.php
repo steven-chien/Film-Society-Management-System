@@ -21,9 +21,9 @@
                 <a href="#" id="Tickets">Manage Tickets</a>
                 <div id="ticket_menu">
                     <ul>
-                        <li><a href="new_tickets.php" >New Tickets</a></li>
-                        <li><a href="past_tickets.php" >Past Tickets</a></li>
-                        <li><a href="application_import.php">Import application data</a></li>
+                        <li><a href="tickets/new_tickets.php" >New Tickets</a></li>
+                        <li><a href="tickets/past_tickets.php" >Past Tickets</a></li>
+                        <li><a href="tickets/application_import.php">Import application data</a></li>
                     </ul>
                 </div>
             </li>
@@ -31,9 +31,9 @@
                 <a href="#" id="Screenings">Screenings</a>
                 <div id="screening_menu">
                     <ul>
-                        <li><a href="new_screening.php">New Screening</a></li>
-                        <li><a href="screening.php">Screening Record</a></li>
-                        <li><a href="screening_attendance.php">Input Attendance</a></li>
+                        <li><a href="screenings/new_screening.php">New Screening</a></li>
+                        <li><a href="screenings/screening.php">Screening Record</a></li>
+                        <li><a href="screenings/screening_attendance.php">Input Attendance</a></li>
                     </ul>
                 </div>
             </li>
