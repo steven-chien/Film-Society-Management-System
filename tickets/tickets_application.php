@@ -14,7 +14,7 @@ and open the template in the editor.
         <?php
         // put your code here
         if(isset($_GET['TicketID'])) {
-            $query = sprintf("select TA.StudentID, M.Name, M.Surname, if(TA.Response=1, 'Yes', 'No') as Response, if(TA.Confirmation=1, 'Yes', 'No') as Confirmation, sum(TA.Response) as previous_response, sum(TA.Confirmation) as previous_confirmation from tickets_application as TA left outer join member as M on M.StudentID=TA.StudentID where TA.TicketID=%d group by TA.StudentID", filter_input(INPUT_GET, 'TicketID'));
+            $query = sprintf("select TA.StudentID, M.Name, M.Surname, if(TA.Response=1, 'Yes', 'No') as Response, if(TA.Confirmation=1, 'Yes', 'No') as Confirmation, (select sum(TA1.Response) from tickets_application as TA1 where TA.StudentID=TA1.StudentID group by TA1.StudentID) as previous_response, (select sum(TA2.Confirmation) from tickets_application as TA2 where TA.StudentID=TA2.StudentID group by TA2.StudentID) as previous_confirmation from tickets_application as TA left outer join member as M on M.StudentID=TA.StudentID where TA.TicketID=".filter_input(INPUT_GET, 'TicketID'));
             #echo $query;
             if(isset($_GET['Response'])&&filter_input(INPUT_GET, 'Response')=='Yes') {
                 $query = $query . ' and Response=1';
@@ -28,16 +28,16 @@ and open the template in the editor.
             else if(isset($_GET['Confirmation'])&&filter_input(INPUT_GET, 'Confirmation')=='No') {
                 $query = $query . ' and Confirmation=0';
             }
-            $query = $query . ' order by Response desc, Confirmation desc;';
+            $query = $query . ' group by TA.StudentID order by Response desc, Confirmation desc;';
 
-            $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
+            $mysql = mysqli_connect('localhost', 'web', '123456', 'film_society');
             if(!$mysql) {
                 die(mysqli_connect_error());
             }
 
             $result = $mysql->query($query);
             if(!$result) {
-                die(mysqli_errno());
+                die(mysqli_error($mysql));
             }
             
             echo '<table cellpadding="10">';

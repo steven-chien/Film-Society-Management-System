@@ -13,7 +13,7 @@ and open the template in the editor.
         <?php session_start(); session_regenerate_id(); if($_SESSION['login']!='1') { header("location:../index.php"); } ?>
         <?php
         // put your code here
-        $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
+        $mysql = mysqli_connect('localhost', 'web', '123456', 'film_society');
 
 	$queryString = sprintf("SELECT * FROM free_tickets");
 	$result = $mysql->query($queryString);

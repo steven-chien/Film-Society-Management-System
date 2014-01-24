@@ -23,7 +23,7 @@
                     <ul>
                         <li><a href="tickets/new_tickets.php" >New Tickets</a></li>
                         <li><a href="tickets/past_tickets.php" >Past Tickets</a></li>
-                        <li><a href="tickets/application_import.php">Import application data</a></li>
+                        <li><a href="tickets/ticket_application_import.php">Import application data</a></li>
                     </ul>
                 </div>
             </li>
@@ -37,7 +37,16 @@
                     </ul>
                 </div>
             </li>
-            <li>Manage Library</li>
+            <li>
+                <a href="#" id="Catalog">Media Catalog</a>
+                <div id="catalog_menu">
+                    <ul>
+                        <li><a href="#">Read Catalog</a></li>
+                        <li><a href="catalog/import_catalog.php">Import Catalog</a></li>
+                        <li><a href="Loan">Loan</a></li>
+                    </ul>
+                </div>
+            </li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
         
@@ -71,6 +80,21 @@
                         console.log('link clicked');
                         $('#screening_menu').hide();
                         screening_click = 0;
+                    }
+                });
+                
+                var catalog_click = 0;
+                $('#catalog_menu').hide();
+                $('#Catalog').click(function() {
+                    if(catalog_click==0) {
+                        console.log('link clicked');
+                        $('#catalog_menu').show();
+                        catalog_click = 1;
+                    }
+                    else {
+                        console.log('link clicked');
+                        $('#catalog_menu').hide();
+                        catalog_click = 0;
                     }
                 });
             });

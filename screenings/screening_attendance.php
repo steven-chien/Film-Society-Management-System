@@ -8,14 +8,14 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>Input Screening Attendance</title>
-        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
     </head>
     <body>
         <?php session_start(); session_regenerate_id(); if($_SESSION['login']!='1') { header("location:../index.php"); } ?>
         <?php
         // put your code here
         if(!isset($_POST['submit'])) {
-            $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
+            $mysql = mysqli_connect('localhost', 'web', '123456', 'film_society');
             $query = "select Date, Title from screening;";
             $result = $mysql->query($query);
             if(!$result) {
@@ -23,7 +23,7 @@ and open the template in the editor.
             }
         }
         else {
-            $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
+            $mysql = mysqli_connect('localhost', 'web', '123456', 'film_society');
             for($i=0; $i<sizeof($_POST['StudentID']); $i++) {
                 $query = sprintf("insert into attendance(ScreeningID, StudentID) values('%s', '%s')", filter_input(INPUT_POST, 'Date'), $_POST['StudentID'][$i]);
                 $result = $mysql->query($query);

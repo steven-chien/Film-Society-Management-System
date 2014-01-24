@@ -14,24 +14,26 @@ and open the template in the editor.
         <?php
         // put your code here
         if(isset($_POST['submit'])&&($_SESSION['ApplicationEdit']=='Yes')) {
-            $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
+            //echo $_SESSION['ApplicationEdit'];
+            $mysql = mysqli_connect('localhost', 'web', '123456', 'film_society');
             for($i=0; $i<sizeof($_POST['StudentID']); $i++) {
-                $query = sprintf("update tickets_application set Response=%d and Confirmation=%d where TicketID=%d and StudentID='%s';",$_POST['Response'][$i], $_POST['Confirmation'][$i], $_POST['TicketID'], $_POST['StudentID'][$i]);
+                $query = sprintf("update tickets_application set Response=%d, Confirmation=%d where TicketID=%d and StudentID='%s';",$_POST['Response'][$i], $_POST['Confirmation'][$i], $_POST['TicketID'], $_POST['StudentID'][$i]);
+                #echo $query . '<br>';
                 $result = $mysql->query($query);
                 if(!$result) {
                     echo 'Unable to update '.$_POST['StudentID'][$i].'<br>';
                 }
             }
             $redirect = "location:tickets_application.php?TicketID=".filter_input(INPUT_POST, 'TicketID');
-            $_POST['ApplicatonEdit'] = NULL;
+            $_SESSION['ApplicatonEdit'] = NULL;
             header($redirect);
         }
         else if(isset($_GET['TicketID'])) {
-            $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
+            $mysql = mysqli_connect('localhost', 'web', '123456', 'film_society');
             if(!$mysql) {
                 echo mysqli_connect_error();
             }
-            $query = sprintf("select TA.StudentID, M.Name, M.Surname, if(TA.Response=1, 'Yes', 'No') as Response, if(TA.Confirmation=1, 'Yes', 'No') as Confirmation, sum(TA.Response) as previous_response, sum(TA.Confirmation) as previous_confirmation from tickets_application as TA left outer join member as M on M.StudentID=TA.StudentID where TA.TicketID=%d group by TA.StudentID", filter_input(INPUT_GET, 'TicketID'));
+            $query = sprintf("select TA.StudentID, M.Name, M.Surname, if(TA.Response=1, 'Yes', 'No') as Response, if(TA.Confirmation=1, 'Yes', 'No') as Confirmation, (select sum(TA1.Response) from tickets_application as TA1 where TA.StudentID=TA1.StudentID group by TA1.StudentID) as previous_response, (select sum(TA2.Confirmation) from tickets_application as TA2 where TA.StudentID=TA2.StudentID group by TA2.StudentID) as previous_confirmation from tickets_application as TA left outer join member as M on M.StudentID=TA.StudentID where TA.TicketID=%d",filter_input(INPUT_GET, 'TicketID'));
             #echo $query;
             $result = $mysql->query($query);
             if(!$result) {

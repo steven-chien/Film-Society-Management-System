@@ -14,7 +14,7 @@ and open the template in the editor.
         <?php
         // put your code here
         error_reporting(E_ALL);
-        $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
+        $mysql = mysqli_connect('localhost', 'web', '123456', 'film_society');
         $result = $mysql->query("select * from venue;");
         $i = 0;
         while($row=$result->fetch_assoc()) {

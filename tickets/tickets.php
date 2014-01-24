@@ -33,7 +33,7 @@ class tickets {
 
     public function newTickets($quantity) {
         $this->Quantity = $quantity;
-        $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
+        $mysql = mysqli_connect('localhost', 'web', '123456', 'film_society');
         if(mysqli_connect_errno()) {
             die(mysqli_connect_error());
         }
@@ -83,13 +83,13 @@ class tickets {
         echo '<tr><td>Remarks</td><td>' . $dbRemarks . '</td></tr>';
         echo '<tr><td>Poster</td><td><a href="images/'.str_replace(' ', '_', $dbTitle).'.jpeg" target="_blank">Click here</a></td></tr>';
         echo '</table>';
-        echo '<p><a href="home.php">Go Back</a></p>';
+        echo '<p><a href="../home.php">Go Back</a></p>';
     }
 }
 
 class loadTickets extends tickets {
     public function __construct($date) {
-        $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
+        $mysql = mysqli_connect('localhost', 'web', '123456', 'film_society');
         $queryString = sprintf("SELECT TicketID, Title, Date, Time, Venue, Quantity FROM tickets WHERE Date='%s'", $date);
         $result = $mysql->query($queryString);
         $row = $result->fetch_assoc();

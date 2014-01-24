@@ -14,6 +14,6 @@ if (ini_get("session.use_cookies")) {
         $params["secure"], $params["httponly"]
     );
 }
-header("location:../index.php");
+header("location:index.php");
 ?>
 

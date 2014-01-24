@@ -15,10 +15,10 @@ and open the template in the editor.
         date_default_timezone_set("Asia/Hong_Kong");
         // put your code here
         #debug
-        if($_POST['review']=='ready') {
+        if(isset($_POST['submit'])&&isset($_POST['review'])&&$_POST['review']=='ready') {
             
             echo $_POST['review'].'<br>';
-            $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
+            $mysql = mysqli_connect('localhost', 'web', '123456', 'film_society');
             if(!$mysql) {
                 echo mysqli_connect_error();
             }
@@ -41,11 +41,20 @@ and open the template in the editor.
             header($redirect);
         }
         else {
-            echo 'not ready<br>';
+            
             $file = fopen($_FILES['CSV']['tmp_name'], 'r');
             $header = NULL;
         }
-        echo "Upload: " . $_FILES["CSV"]["name"] . "<br>";
+        $TimestampCol = filter_input(INPUT_POST, 'Timestamp');
+        $StudentIDCol = filter_input(INPUT_POST, 'StudentID');
+        $AnswerCol = filter_input(INPUT_POST, 'Answer');
+        $ResponseCol = filter_input(INPUT_POST, 'Response');
+        $ConfirmationCol = filter_input(INPUT_POST, 'Confirmation');
+        if(!is_numeric($TimestampCol)||!is_numeric($StudentIDCol)||!is_numeric($AnswerCol)||!is_numeric($ResponseCol)||!is_numeric($ConfirmationCol)) {
+            die('column values should be int');
+        }
+        
+        echo "Upload: " . $_FILES["CSV"]["name"] . " for TicketID: " . filter_input(INPUT_POST, 'TicketID') . "<br>";
         ?>
         <form name="application_submit" method="post" action="ticket_application_submit.php">
             <table cellpadding="10">
@@ -58,20 +67,27 @@ and open the template in the editor.
                 </tr>
                     <?php
                     while($row=fgetcsv($file, 1000, ',')) {
+			//var_dump($row);
                         if(!$header) {
                             $header = $row;
                         }
                         else {
                             echo '<tr>';
-                            $timestamp = DateTime::createFromFormat('m/d/Y H:i:s',$row[0])->format('Y-m-d H:i:s');
+                            //echo $row[$TimestampCol];
+                            //$timestamp = date('m-d-Y H:i:s', strtotime($row[$TimestampCol]));
+                            
+                            $old_stamp = DateTime::createFromFormat('m/d/Y H:i:s', $row[$TimestampCol]);
+                            $timestamp = $old_stamp->format('Y-m-d H:i:s');
+                            //$timestamp = $timestamp->format('Y-m-d H:i:s');
                             echo '<td>'.$timestamp.'<input type="hidden" name="Timestamp[]" value="'.$timestamp.'"></td>';
-                            echo '<td><input type="text" name="StudentID[]" value="'.$row[1].'"></td>';
-                            echo '<td><input type="text" name="Answer[]" value="'.$row[5].'"></td>';
-                            echo '<td align="right"><select name="Response[]">';if($row[6]=='1') { echo '<option value="1" selected="selected">Yes</option><option value="0">No</option>'; } else { echo '<option value="1">Yes</option><option value="0" selected="selected">No</option>'; } echo '</select></td>';
-                            echo '<td align="right"><select name="Confirmation[]">';if($row[7]=='1') { echo '<option value="1" selected="selected">Yes</option><option value="0">No</option>'; } else { echo '<option value="1">Yes</option><option value="0" selected="selected">No</option>'; } echo '</select></td>';
+                            echo '<td><input type="text" name="StudentID[]" value="'.$row[$StudentIDCol].'"></td>';
+                            echo '<td><input type="text" name="Answer[]" value="'.$row[$AnswerCol].'"></td>';
+                            echo '<td align="right"><select name="Response[]">';if(count($row)>$ResponseCol&&$row[$ResponseCol]=='1') { echo '<option value="1" selected="selected">Yes</option><option value="0">No</option>'; } else { echo '<option value="1">Yes</option><option value="0" selected="selected">No</option>'; } echo '</select></td>';
+                        echo '<td align="right"><select name="Confirmation[]">';if(count($row)>$ConfirmationCol&&$row[$ConfirmationCol]=='1') { echo '<option value="1" selected="selected">Yes</option><option value="0">No</option>'; } else { echo '<option value="1">Yes</option><option value="0" selected="selected">No</option>'; } echo '</select></td>';
                             echo '</tr>';
                         }
                     }
+                    
                     ?>
                 <tr>
                     <td colspan="4" align="right">Are you sure the above information is correct?</td>

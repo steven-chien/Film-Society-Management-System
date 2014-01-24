@@ -9,7 +9,7 @@
 date_default_timezone_set("Asia/Hong_Kong");
 
 if(isset($_POST['submit'])) {
-    $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
+    $mysql = mysqli_connect('localhost', 'web', '123456', 'film_society');
     for($i=0; $i<sizeof($_POST['Date']); $i++) {
         $time = date('G:i:s',strtotime(filter_input(INPUT_POST, 'Time')));
         $query = sprintf("insert into screening(Date, Time, Title, Venue, Expense) values('%s', '%s', '%s', '%s', %d);", filter_input(INPUT_POST, 'Date'), $time, filter_input(INPUT_POST, 'Title'), filter_input(INPUT_POST, 'Venue'), filter_input(INPUT_POST, 'Expense'));
@@ -29,8 +29,8 @@ if(isset($_POST['submit'])) {
     require("../PHPMailer-master/class.phpmailer.php");
     $mail = new PHPMailer();
     $mail->IsSMTP();
-    $mail->Username = "stevenchien1993@gmail.com";
-    $mail->Password = "i:xXitJ#[enb";
+    $mail->Username = "xxx@gmail.com";
+    $mail->Password = "xxx";
     
     $webmaster_email = "elc.pifs@polyu.edu.hk"; 
     #$mail->FromName = "ELC, PIFS";
