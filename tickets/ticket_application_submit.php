@@ -18,7 +18,7 @@ and open the template in the editor.
         if(isset($_POST['submit'])&&isset($_POST['review'])&&$_POST['review']=='ready') {
             
             echo $_POST['review'].'<br>';
-            $mysql = mysqli_connect('localhost', 'web', '123456', 'film_society');
+            $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
             if(!$mysql) {
                 echo mysqli_connect_error();
             }

@@ -15,7 +15,7 @@ and open the template in the editor.
         // put your code here
         if(isset($_POST['submit'])&&($_SESSION['ApplicationEdit']=='Yes')) {
             //echo $_SESSION['ApplicationEdit'];
-            $mysql = mysqli_connect('localhost', 'web', '123456', 'film_society');
+            $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
             for($i=0; $i<sizeof($_POST['StudentID']); $i++) {
                 $query = sprintf("update tickets_application set Response=%d, Confirmation=%d where TicketID=%d and StudentID='%s';",$_POST['Response'][$i], $_POST['Confirmation'][$i], $_POST['TicketID'], $_POST['StudentID'][$i]);
                 #echo $query . '<br>';
@@ -29,7 +29,7 @@ and open the template in the editor.
             header($redirect);
         }
         else if(isset($_GET['TicketID'])) {
-            $mysql = mysqli_connect('localhost', 'web', '123456', 'film_society');
+            $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
             if(!$mysql) {
                 echo mysqli_connect_error();
             }

@@ -11,7 +11,8 @@ if(isset($_POST['submit']))
 {
     include_once("movie.class.php");
     date_default_timezone_set("Asia/Hong_Kong");
-    $mysql = mysqli_connect('localhost', 'web', '123456', 'film_society');
+    $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
+    #$mysql = mysqli_connect('localhost', 'web', '123456', 'film_society');
     if(!$mysql) {
         echo mysqli_connect_error();
     }

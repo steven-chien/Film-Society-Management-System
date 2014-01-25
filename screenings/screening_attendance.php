@@ -15,7 +15,7 @@ and open the template in the editor.
         <?php
         // put your code here
         if(!isset($_POST['submit'])) {
-            $mysql = mysqli_connect('localhost', 'web', '123456', 'film_society');
+            $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
             $query = "select Date, Title from screening;";
             $result = $mysql->query($query);
             if(!$result) {
@@ -23,7 +23,7 @@ and open the template in the editor.
             }
         }
         else {
-            $mysql = mysqli_connect('localhost', 'web', '123456', 'film_society');
+            $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
             for($i=0; $i<sizeof($_POST['StudentID']); $i++) {
                 $query = sprintf("insert into attendance(ScreeningID, StudentID) values('%s', '%s')", filter_input(INPUT_POST, 'Date'), $_POST['StudentID'][$i]);
                 $result = $mysql->query($query);
