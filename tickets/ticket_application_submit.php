@@ -29,7 +29,7 @@ and open the template in the editor.
                 else {
                     $Quantity = 0;
                 }
-                $query = sprintf("insert into tickets_application(StudentID, Timestamp, Answer, Response, Confirmation, TicketID, Quantity) values('%s', '%s', '%s', %d, %d, %d, %d);", $_POST['StudentID'][$i], $_POST['Timestamp'][$i], $_POST['Answer'][$i], $_POST['Response'][$i], $_POST['Confirmation'][$i], $_POST['TicketID'], $Quantity);
+                $query = sprintf("insert into tickets_application(StudentID, Timestamp, Answer, Response, Confirmation, TicketID, Quantity, ContactNo) values('%s', '%s', '%s', %d, %d, %d, %d, '%s');", $_POST['StudentID'][$i], $_POST['Timestamp'][$i], $_POST['Answer'][$i], $_POST['Response'][$i], $_POST['Confirmation'][$i], $_POST['TicketID'], $Quantity, $_POST['ContactNo'][$i]);
                 $result = $mysql->query($query);
                 if(!$result) {
                     echo mysqli_error($mysql);
@@ -50,6 +50,8 @@ and open the template in the editor.
         $AnswerCol = filter_input(INPUT_POST, 'Answer');
         $ResponseCol = filter_input(INPUT_POST, 'Response');
         $ConfirmationCol = filter_input(INPUT_POST, 'Confirmation');
+        $ContactNoCol = filter_input(INPUT_POST, 'ContactNo');
+        
         if(!is_numeric($TimestampCol)||!is_numeric($StudentIDCol)||!is_numeric($AnswerCol)||!is_numeric($ResponseCol)||!is_numeric($ConfirmationCol)) {
             die('column values should be int');
         }
@@ -61,6 +63,7 @@ and open the template in the editor.
                 <tr>
                     <td>Timestamp</td>
                     <td>StudentID</td>
+                    <td>Contact No.</td>
                     <td>Answer</td>
                     <td>Response</td>
                     <td>Confirmation</td>
@@ -81,6 +84,7 @@ and open the template in the editor.
                             //$timestamp = $timestamp->format('Y-m-d H:i:s');
                             echo '<td>'.$timestamp.'<input type="hidden" name="Timestamp[]" value="'.$timestamp.'"></td>';
                             echo '<td><input type="text" name="StudentID[]" value="'.$row[$StudentIDCol].'"></td>';
+                            echo '<td><input type="text" name=ContactNo[]" value="'.$row[$ContactNoCol].'"></td>';
                             echo '<td><input type="text" name="Answer[]" value="'.$row[$AnswerCol].'"></td>';
                             echo '<td align="right"><select name="Response[]">';if(count($row)>$ResponseCol&&$row[$ResponseCol]=='1') { echo '<option value="1" selected="selected">Yes</option><option value="0">No</option>'; } else { echo '<option value="1">Yes</option><option value="0" selected="selected">No</option>'; } echo '</select></td>';
                         echo '<td align="right"><select name="Confirmation[]">';if(count($row)>$ConfirmationCol&&$row[$ConfirmationCol]=='1') { echo '<option value="1" selected="selected">Yes</option><option value="0">No</option>'; } else { echo '<option value="1">Yes</option><option value="0" selected="selected">No</option>'; } echo '</select></td>';

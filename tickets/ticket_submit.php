@@ -12,6 +12,8 @@
          * and open the template in the editor.
          */
         session_start();
+        date_default_timezone_set('Asia/Hong_Kong');
+        
         include("tickets.php");
         $tickets = new tickets(filter_input(INPUT_POST, 'title'), filter_input(INPUT_POST, 'date'),filter_input(INPUT_POST, 'time'), filter_input(INPUT_POST, 'distributor'), filter_input(INPUT_POST, 'venue'), filter_input(INPUT_POST, 'remarks'));
         $tickets->newTickets(filter_input(INPUT_POST, 'quantity'));

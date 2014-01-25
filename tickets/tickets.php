@@ -81,7 +81,7 @@ class tickets {
         echo '<tr><td>Venue</td><td>' . $venueName . '</td></tr>';
         echo '<tr><td>Quantity</td><td>' . $dbQuantity . '</td></tr>';
         echo '<tr><td>Remarks</td><td>' . $dbRemarks . '</td></tr>';
-        echo '<tr><td>Poster</td><td><a href="images/'.str_replace(' ', '_', $dbTitle).'.jpeg" target="_blank">Click here</a></td></tr>';
+        echo '<tr><td>Poster</td><td><a href="../images/'.str_replace(' ', '_', $dbTitle).'.jpg" target="_blank">Click here</a></td></tr>';
         echo '</table>';
         echo '<p><a href="../home.php">Go Back</a></p>';
     }

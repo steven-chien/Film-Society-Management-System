@@ -55,6 +55,9 @@ and open the template in the editor.
                     <td>StudentID Column</td><td align="right"><input type="text" value="1" name="StudentID"></td>
                 </tr>
                 <tr>
+                    <td>ContactNo. Column</td><td align="right"><input type="text" value="2" name="ContactNo"></td>
+                </tr>
+                <tr>
                     <td>Answer Column</td><td align="right"><input type="text" value="3" name="Answer"></td>
                 </tr>
                 <tr>

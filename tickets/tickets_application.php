@@ -14,7 +14,7 @@ and open the template in the editor.
         <?php
         // put your code here
         if(isset($_GET['TicketID'])) {
-            $query = sprintf("select TA.StudentID, M.Name, M.Surname, if(TA.Response=1, 'Yes', 'No') as Response, if(TA.Confirmation=1, 'Yes', 'No') as Confirmation, (select sum(TA1.Response) from tickets_application as TA1 where TA.StudentID=TA1.StudentID group by TA1.StudentID) as previous_response, (select sum(TA2.Confirmation) from tickets_application as TA2 where TA.StudentID=TA2.StudentID group by TA2.StudentID) as previous_confirmation from tickets_application as TA left outer join member as M on M.StudentID=TA.StudentID where TA.TicketID=".filter_input(INPUT_GET, 'TicketID'));
+            $query = sprintf("select TA.StudentID, M.Name, M.Surname, TA.ContactNo, if(TA.Response=1, 'Yes', 'No') as Response, if(TA.Confirmation=1, 'Yes', 'No') as Confirmation, (select sum(TA1.Response) from tickets_application as TA1 where TA.StudentID=TA1.StudentID group by TA1.StudentID) as previous_response, (select sum(TA2.Confirmation) from tickets_application as TA2 where TA.StudentID=TA2.StudentID group by TA2.StudentID) as previous_confirmation from tickets_application as TA left outer join member as M on M.StudentID=TA.StudentID where TA.TicketID=".filter_input(INPUT_GET, 'TicketID'));
             #echo $query;
             if(isset($_GET['Response'])&&filter_input(INPUT_GET, 'Response')=='Yes') {
                 $query = $query . ' and Response=1';
@@ -41,9 +41,9 @@ and open the template in the editor.
             }
             
             echo '<table cellpadding="10">';
-            echo '<tr><td>StudentID</td><td>Name</td><td>Surname</td><td>Response</td><td>Confirmation</td><td>Past Response</td><td>Past Confirmation</td></tr>';
+            echo '<tr><td>StudentID</td><td>Name</td><td>Surname</td><td>ContactNo.</td><td>Response</td><td>Confirmation</td><td>Past Response</td><td>Past Confirmation</td></tr>';
             while($row = $result->fetch_assoc()) {
-                echo '<tr><td>' . $row['StudentID'] . '</td><td>' . $row['Name'] . '</td><td>' . $row['Surname'] . '</td><td>' . $row['Response'] . '</td><td>' . $row['Confirmation'] . '</td><td align="right">' . $row['previous_response'] . '</td><td align="right">' . $row['previous_confirmation'] . '</td></tr>';
+                echo '<tr><td>' . $row['StudentID'] . '</td><td>' . $row['Name'] . '</td><td>' . $row['Surname'] . '</td><td>' . $row['ContactNo'] . '</td><td>' . $row['Response'] . '</td><td>' . $row['Confirmation'] . '</td><td align="right">' . $row['previous_response'] . '</td><td align="right">' . $row['previous_confirmation'] . '</td></tr>';
             }
             echo '</table>';
         }
@@ -60,7 +60,7 @@ and open the template in the editor.
         echo '</form>';
         
         echo '<table>';
-        echo '<tr><td><a href="../home.php">Go Back</a></td><td><a href="ticket_application_record_edit.php?TicketID='.filter_input(INPUT_GET, 'TicketID').'">Edit</a></td></tr>';
+        echo '<tr><td><a href="../home.php">Go Back</a></td><td><a href="ticket_application_record_edit.php?TicketID='.filter_input(INPUT_GET, 'TicketID').'">Edit</a></td><td><a href="tickets_attendance_list.php?TicketID='.filter_input(INPUT_GET, 'TicketID').'" target=_blank>Generate Attendance List</a></td></tr>';
         echo '</table>';
         ?>
     </body>

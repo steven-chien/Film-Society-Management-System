@@ -33,7 +33,7 @@ and open the template in the editor.
             if(!$mysql) {
                 echo mysqli_connect_error();
             }
-            $query = sprintf("select TA.StudentID, M.Name, M.Surname, if(TA.Response=1, 'Yes', 'No') as Response, if(TA.Confirmation=1, 'Yes', 'No') as Confirmation, (select sum(TA1.Response) from tickets_application as TA1 where TA.StudentID=TA1.StudentID group by TA1.StudentID) as previous_response, (select sum(TA2.Confirmation) from tickets_application as TA2 where TA.StudentID=TA2.StudentID group by TA2.StudentID) as previous_confirmation from tickets_application as TA left outer join member as M on M.StudentID=TA.StudentID where TA.TicketID=%d",filter_input(INPUT_GET, 'TicketID'));
+            $query = sprintf("select TA.StudentID, M.Name, M.Surname, TA.ContactNo, if(TA.Response=1, 'Yes', 'No') as Response, if(TA.Confirmation=1, 'Yes', 'No') as Confirmation, (select sum(TA1.Response) from tickets_application as TA1 where TA.StudentID=TA1.StudentID group by TA1.StudentID) as previous_response, (select sum(TA2.Confirmation) from tickets_application as TA2 where TA.StudentID=TA2.StudentID group by TA2.StudentID) as previous_confirmation from tickets_application as TA left outer join member as M on M.StudentID=TA.StudentID where TA.TicketID=%d",filter_input(INPUT_GET, 'TicketID'));
             #echo $query;
             $result = $mysql->query($query);
             if(!$result) {
@@ -42,11 +42,11 @@ and open the template in the editor.
             echo '<form name="applicaton_info_edit" method="post" action="ticket_application_record_edit.php">';
             echo '<input type="hidden" name="TicketID" value="'.filter_input(INPUT_GET, 'TicketID').'">';
             echo '<table cellpadding="10">';
-            echo '<tr><td>StudentID</td><td>Name</td><td>Surname</td><td>Response</td><td>Confirmation</td><td>Previous Response</td><td>Previous Confirmation</td></tr>';
+            echo '<tr><td>StudentID</td><td>Name</td><td>Surname</td><td>ContactNo.</td><td>Response</td><td>Confirmation</td><td>Previous Response</td><td>Previous Confirmation</td></tr>';
             while($row=$result->fetch_assoc()) {
                 #echo $row['StudentID'];
                 echo '<tr>';
-                echo '<td>'.$row['StudentID'].'<input type="hidden" name="StudentID[]" value="'.$row['StudentID'].'"></td><td>'.$row['Name'].'</td><td>'.$row['Surname'].'</td>';
+                echo '<td>'.$row['StudentID'].'<input type="hidden" name="StudentID[]" value="'.$row['StudentID'].'"></td><td>'.$row['Name'].'</td><td>'.$row['Surname'].'</td><td>'.$row['ContactNo'].'</td>';
                 echo '<td align="right"><select name="Response[]">';
                 if($row['Response']=='Yes') {
                     echo '<option value="1" selected="selected">Yes</option>';
@@ -71,7 +71,7 @@ and open the template in the editor.
                 echo '</tr>';
             }
             $_SESSION['ApplicationEdit'] = 'Yes';
-            echo '<tr><td colspan="7" align="right"><input type="submit" name="submit" value="submit"></td></tr>';
+            echo '<tr><td colspan="8" align="right"><input type="submit" name="submit" value="submit"></td></tr>';
             echo '</table>';
             echo '</form>';
             $result->free();
