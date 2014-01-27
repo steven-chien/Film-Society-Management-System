@@ -41,7 +41,7 @@
                 <a href="#" id="Catalog">Media Catalog</a>
                 <div id="catalog_menu">
                     <ul>
-                        <li><a href="#">Read Catalog</a></li>
+                        <li><a href="catalog/catalog_list.php">Read Catalog</a></li>
                         <li><a href="catalog/import_catalog.php">Import Catalog</a></li>
                         <li><a href="Loan">Loan</a></li>
                     </ul>
