@@ -17,7 +17,13 @@ and open the template in the editor.
             //echo $_SESSION['ApplicationEdit'];
             $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
             for($i=0; $i<sizeof($_POST['StudentID']); $i++) {
-                $query = sprintf("update tickets_application set Response=%d, Confirmation=%d where TicketID=%d and StudentID='%s';",$_POST['Response'][$i], $_POST['Confirmation'][$i], $_POST['TicketID'], $_POST['StudentID'][$i]);
+                if($_POST['Confirmation'][$i]==1) {
+                    $Quantity=2;
+                }
+                else {
+                    $Quantity=0;
+                }
+                $query = sprintf("update tickets_application set Response=%d, Confirmation=%d, Quantity=%d where TicketID=%d and StudentID='%s';",$_POST['Response'][$i], $_POST['Confirmation'][$i], $Quantity, $_POST['TicketID'], $_POST['StudentID'][$i]);
                 #echo $query . '<br>';
                 $result = $mysql->query($query);
                 if(!$result) {
