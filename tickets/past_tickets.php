@@ -21,7 +21,7 @@ and open the template in the editor.
             die(mysql_error());
 	}
 	echo '<table cellspacing="20%" width="70%">';
-	echo '<tr><td>TicketID</td><td>Title</td><td>Date</td><td>Time</td><td>Venue</td><td>Distributor</td><td>Quantity</td><td>Remarks</td></tr>';
+	echo '<tr><td>TicketID</td><td>Title</td><td>Date</td><td>Time</td><td>Venue</td><td>Distributor</td><td>Quantity</td><td>Reserve</td><td>Qty Available</td><td>Given Out<td>Remarks</td></tr>';
 	while($row=$result->fetch_assoc()) {
             $queryString = sprintf("select Name from venue where VenueID=%d", $row['VenueID']);
             $tempResult = $mysql->query($queryString);
@@ -35,7 +35,13 @@ and open the template in the editor.
             $distributorName = $rowDistributor['Company'];
             $tempResult->free();
             
-            echo '<tr><td>' . $row['TicketID'] . '</td><td><a href="tickets_application.php?TicketID=' . $row['TicketID'] . '" >' . $row['Title'] . '</a></td><td>' . $row['Date'] . '</td><td>' . $row['Time'] . '</td><td>' . $venueName . '</td><td>' . $distributorName . '</td><td>' . $row['Quantity'] . '</td><td>' . $row['Remarks'] . '</tr>';
+            $queryString = "select sum(Quantity) as TotalGaveOut from tickets_application where TicketID='".$row['TicketID']."';";
+            $tempResult = $mysql->query($queryString);
+            $rowGaveoutQuantity = $tempResult->fetch_assoc();
+            $gaveoutQuantity = $rowGaveoutQuantity['TotalGaveOut'];
+            $tempResult->free();
+            
+            echo '<tr><td>' . $row['TicketID'] . '</td><td><a href="tickets_application.php?TicketID=' . $row['TicketID'] . '" >' . $row['Title'] . '</a></td><td>' . $row['Date'] . '</td><td>' . $row['Time'] . '</td><td>' . $venueName . '</td><td>' . $distributorName . '</td><td>' . $row['Quantity'] . '</td><td>'. $row['Reserve'] . '</td><td>' . ($row['Quantity']-$row['Reserve']) . '</td><td>' . $gaveoutQuantity . '</td><td>' . $row['Remarks'] . '</td></tr>';
 	}
         $result->free();
 	echo '</table>';

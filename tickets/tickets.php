@@ -20,6 +20,7 @@ class tickets {
     private $Venue;
     private $Member = array();
     private $Quantity;
+    private $Reserve;
 
     public function __construct($Title, $Date, $Time, $Distributor, $Venue, $Remarks) {
         $this->Title = $Title;
@@ -31,17 +32,18 @@ class tickets {
         $this->Remarks = $Remarks;
     }
 
-    public function newTickets($quantity) {
+    public function newTickets($quantity, $reserve) {
         $this->Quantity = $quantity;
+        $this->Reserve = $reserve;
         $mysql = mysqli_connect($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
         if(mysqli_connect_errno()) {
             die(mysqli_connect_error());
         }
         
-        $queryString = sprintf("INSERT INTO free_tickets(Title, Date, Time, VenueID, DistributorID, Quantity, Remarks) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s')", $this->Title, $this->Date, $this->Time, $this->Venue, $this->Distributor, $this->Quantity, $this->Remarks);
+        $queryString = sprintf("INSERT INTO free_tickets(Title, Date, Time, VenueID, DistributorID, Quantity, Remarks, Reserve) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', %d)", $this->Title, $this->Date, $this->Time, $this->Venue, $this->Distributor, $this->Quantity, $this->Remarks, $this->Reserve);
         $mysql->query($queryString);
 
-        $queryString = sprintf("SELECT TicketID, Title, Date, Time, VenueID, DistributorID, Remarks, Quantity FROM free_tickets WHERE Title='%s' AND Date='%s'", $this->Title, $this->Date);
+        $queryString = sprintf("SELECT TicketID, Title, Date, Time, VenueID, DistributorID, Remarks, Quantity, Reserve FROM free_tickets WHERE Title='%s' AND Date='%s'", $this->Title, $this->Date);
         $result = $mysql->query($queryString);
         
         $row = $result->fetch_assoc();
@@ -51,6 +53,7 @@ class tickets {
         $dbTime = $row['Time'];
         $dbQuantity = $row['Quantity'];
         $dbRemarks = $row['Remarks'];
+        $dbReserve = $row['Reserve'];
         $result->free();
         
         $queryString = sprintf("select Name from venue where VenueID=%d", $this->Venue);
@@ -80,6 +83,7 @@ class tickets {
         echo '<tr><td>Time</td><td>' . $dbTime . '</td></tr>';
         echo '<tr><td>Venue</td><td>' . $venueName . '</td></tr>';
         echo '<tr><td>Quantity</td><td>' . $dbQuantity . '</td></tr>';
+        echo '<tr><td>Reserve</td><td>' . $dbReserve . '</td></tr>';
         echo '<tr><td>Remarks</td><td>' . $dbRemarks . '</td></tr>';
         echo '<tr><td>Poster</td><td><a href="../images/'.str_replace(' ', '_', $dbTitle).'.jpg" target="_blank">Click here</a></td></tr>';
         echo '</table>';

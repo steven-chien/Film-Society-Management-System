@@ -16,7 +16,7 @@
         
         include("tickets.php");
         $tickets = new tickets(filter_input(INPUT_POST, 'title'), filter_input(INPUT_POST, 'date'),filter_input(INPUT_POST, 'time'), filter_input(INPUT_POST, 'distributor'), filter_input(INPUT_POST, 'venue'), filter_input(INPUT_POST, 'remarks'));
-        $tickets->newTickets(filter_input(INPUT_POST, 'quantity'));
+        $tickets->newTickets(filter_input(INPUT_POST, 'quantity'), filter_input(INPUT_POST, 'reserve'));
 
         $tmp = str_replace(' ', '_', filter_input(INPUT_POST, 'title'));
 

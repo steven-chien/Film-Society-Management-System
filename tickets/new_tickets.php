@@ -59,6 +59,7 @@ and open the template in the editor.
         echo '            </td>';
         echo '        </tr>';
         echo '        <tr><td>Quantity</td><td><input type="text" name="quantity"></td></tr>';
+        echo '        <tr><td>Reserve</td><td><input type="text" name="reserve"></td></tr>';
         echo '        <tr><td>Poster</td><td><input name="Poster" type="file" id="file"></td></tr>';
         echo '        <tr><td>Remarks</td><td><input type="text" name="remarks"></td></tr>';
         echo '        <tr><td colspan="2" align="right"><input type="submit" value="submit"><input type="button" value="Back" onClick="history.go(-1);return true;"></td></tr>';
