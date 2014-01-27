@@ -58,12 +58,12 @@
                 $('#Tickets').click(function() {
                     if(ticket_click==0) {
                         console.log('link clicked');
-                        $('#ticket_menu').show();
+                        $('#ticket_menu').fadeIn(500);
                         ticket_click = 1;
                     }
                     else {
                         console.log('link clicked');
-                        $('#ticket_menu').hide();
+                        $('#ticket_menu').fadeOut(500);
                         ticket_click = 0;
                     }
                 });
@@ -73,12 +73,12 @@
                 $('#Screenings').click(function() {
                     if(screening_click==0) {
                         console.log('link clicked');
-                        $('#screening_menu').show();
+                        $('#screening_menu').fadeIn(500);
                         screening_click = 1;
                     }
                     else {
                         console.log('link clicked');
-                        $('#screening_menu').hide();
+                        $('#screening_menu').fadeOut(500);
                         screening_click = 0;
                     }
                 });
@@ -88,12 +88,12 @@
                 $('#Catalog').click(function() {
                     if(catalog_click==0) {
                         console.log('link clicked');
-                        $('#catalog_menu').show();
+                        $('#catalog_menu').fadeIn(500);
                         catalog_click = 1;
                     }
                     else {
                         console.log('link clicked');
-                        $('#catalog_menu').hide();
+                        $('#catalog_menu').fadeOut(500);
                         catalog_click = 0;
                     }
                 });
