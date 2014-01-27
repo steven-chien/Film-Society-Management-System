@@ -55,5 +55,6 @@ if(isset($_POST['submit']))
     }
     echo $success_count . ' successful import<br>';
     echo $false_count . ' failed import</br>';
+    echo '<p><a href="../home.php">Back</a></p>';
 }
 ?>

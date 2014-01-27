@@ -30,6 +30,8 @@
 		    header("location:index.php");
                 }
                 else {
+                    $query = "update login set Login_count=Login_count+1 where User='".$user."';";
+                    $mysql->query($query);
                     session_start();
                     $_SESSION['user'] = 'web';
                     $_SESSION['password'] = '123456';

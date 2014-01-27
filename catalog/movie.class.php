@@ -114,7 +114,7 @@ class movie {
 		fclose($file);
 
 		$data = json_decode(file_get_contents('/tmp/movie.json'), true);
-                var_dump($data);
+                #var_dump($data);
                 if($data['Response']=='False') {
                     echo $this->Title . ' not inserted<br>';
                     throw new Exception('Response from server is false');
