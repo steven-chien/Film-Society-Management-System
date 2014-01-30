@@ -43,7 +43,7 @@ and open the template in the editor.
             echo '<table cellpadding="10">';
             echo '<tr><td>StudentID</td><td>Name</td><td>Surname</td><td>ContactNo.</td><td>Response</td><td>Confirmation</td><td>Past Response</td><td>Past Confirmation</td></tr>';
             while($row = $result->fetch_assoc()) {
-                echo '<tr><td>' . $row['StudentID'] . '</td><td>' . $row['Name'] . '</td><td>' . $row['Surname'] . '</td><td>' . $row['ContactNo'] . '</td><td>' . $row['Response'] . '</td><td>' . $row['Confirmation'] . '</td><td align="right">' . $row['previous_response'] . '</td><td align="right">' . $row['previous_confirmation'] . '</td></tr>';
+                echo '<tr><td><a href="member_application.php?StudentID=' . $row['StudentID'] . '">'.$row['StudentID'].'</a></td><td>' . $row['Name'] . '</td><td>' . $row['Surname'] . '</td><td>' . $row['ContactNo'] . '</td><td>' . $row['Response'] . '</td><td>' . $row['Confirmation'] . '</td><td align="right">' . $row['previous_response'] . '</td><td align="right">' . $row['previous_confirmation'] . '</td></tr>';
             }
             echo '</table>';
         }
