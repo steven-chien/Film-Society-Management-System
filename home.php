@@ -43,7 +43,8 @@
                     <ul>
                         <li><a href="catalog/catalog_list.php">Read Catalog</a></li>
                         <li><a href="catalog/import_catalog.php">Import Catalog</a></li>
-                        <li><a href="Loan">Loan</a></li>
+                        <li><a href="catalog/catalog_checkout.php">Check Out</a></li>
+                        <li><a href="catalog/catalog_checkin.php">Check In</a></li>
                     </ul>
                 </div>
             </li>

@@ -20,7 +20,7 @@ and open the template in the editor.
 	if(!$result) {
             die(mysql_error());
 	}
-	echo '<table cellspacing="20%" width="70%">';
+	echo '<table cellpadding="10%" width="70%">';
 	echo '<tr><td>TicketID</td><td>Title</td><td>Date</td><td>Time</td><td>Venue</td><td>Distributor</td><td>Quantity</td><td>Reserve</td><td>Qty Available</td><td>Given Out<td>Remarks</td></tr>';
 	while($row=$result->fetch_assoc()) {
             $queryString = sprintf("select Name from venue where VenueID=%d", $row['VenueID']);

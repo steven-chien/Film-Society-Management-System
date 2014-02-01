@@ -10,7 +10,8 @@
  *
  * @author steven
  */
-session_start(); session_regenerate_id(); if($_SESSION['login']!='1') { header("location:../index.php");}
+//session_start(); session_regenerate_id();
+if($_SESSION['login']!='1') { header("location:../index.php");}
 
 class tickets {
     private $TicketID;
