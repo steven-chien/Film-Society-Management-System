@@ -14,15 +14,25 @@ and open the template in the editor.
         <?php
         // put your code here
         if(isset($_POST['StudentID'])&&($_POST['StudentID']!='')) {
-            echo '<form name="catalog_checkout_submit" action="catalog_checkout_submit.php" method="post">';
-            echo '<table>';
-            echo '<tr><td>1</td><td><input type="text" name="MovieID_1"></td></tr>';
-            echo '<tr><td>2</td><td><input type="text" name="MovieID_2"></td></tr>';
-            echo '<tr><td>3</td><td><input type="text" name="MovieID_3"></td></tr>';
-            echo '<tr><td align="right" colspan="2"><input type="submit" name="submit" value="submit"></td><tr>';
-            echo '</table>';
-            echo '<input type="hidden" name="StudentID" value="'.filter_input(INPUT_POST, 'StudentID').'">';
-            echo '</form>';
+            $mysql = new mysqli($_SESSION['host'], $_SESSION['user'], $_SESSION['password'], $_SESSION['db']);
+            $query = "select StudentID from member where StudentID='".filter_input(INPUT_POST, 'StudentID')."';";
+            $result = $mysql->query($query);
+            $row = $result->fetch_assoc();
+        
+            if($row['StudentID']==filter_input(INPUT_POST, 'StudentID')) {
+                echo '<form name="catalog_checkout_submit" action="catalog_checkout_submit.php" method="post">';
+                echo '<table>';
+                echo '<tr><td>1</td><td><input type="text" name="MovieID_1"></td></tr>';
+                echo '<tr><td>2</td><td><input type="text" name="MovieID_2"></td></tr>';
+                echo '<tr><td>3</td><td><input type="text" name="MovieID_3"></td></tr>';
+                echo '<tr><td align="right" colspan="2"><input type="submit" name="submit" value="submit"></td><tr>';
+                echo '</table>';
+                echo '<input type="hidden" name="StudentID" value="'.filter_input(INPUT_POST, 'StudentID').'">';
+                echo '</form>';
+            }
+            else {
+                echo 'Incorrect StudentID</br>';
+            }
         }
         else {
             echo '<form name="catalog_checkout" action="catalog_checkout.php" method="post">';

@@ -20,10 +20,10 @@ and open the template in the editor.
             die(mysqli_error($mysql));
         }
         
-        echo '<table>';
+        echo '<table cellpadding="10%">';
         echo '<tr><td>ID</td><td>Title</td><td>Year</td><td>Director</td><td>Media</td><td>Qty Available</td></td>';
         while($row=$result->fetch_assoc()) {
-            echo '<tr><td>'.$row['ID'].'</td><td>'.$row['Title'].'</td><td>'.$row['Year'].'</td><td>'.$row['Director'].'</td><td>'.$row['Media'].'</td><td>'.$row['Status'].'</td></tr>';
+            echo '<tr><td><a href="catalog_loan_history.php?ID='.$row['ID'].'">'.$row['ID'].'</a></td><td>'.$row['Title'].'</td><td>'.$row['Year'].'</td><td>'.$row['Director'].'</td><td>'.$row['Media'].'</td><td>'.$row['Status'].'</td></tr>';
         }
         echo '</table>';
         ?>
